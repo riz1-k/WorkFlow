@@ -28,7 +28,7 @@ function Blogs() {
 
   return (
     <>
-      <div className=' md:h-screen dark:bg-gray-900 bg-gray-100 '>
+      <div className=' dark:bg-gray-900 bg-gray-100 '>
         <>
           {addClick && (
             <Backdrop loading={false}>

@@ -1,8 +1,8 @@
-import Blog from '../components/blog';
+import Blog from '../components/Blog';
 
 function index({ blogs }) {
   return (
-    <div className='h-screen dark:bg-gray-900 '>
+    <div className=' dark:bg-gray-900 '>
       <div className='max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16 '>
         <div className='grid grid-cols-1 md:grid-cols-1 sm:grid-cols-2 gap-10'>
           {blogs.map(blog => {
