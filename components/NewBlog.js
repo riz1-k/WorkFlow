@@ -1,44 +1,45 @@
 import axios from 'axios';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { AuthContext } from '../../components/globalState';
+import { AuthContext } from './globalState';
 
-function EditBlog({ setEdit, id, title, author, description, imageURL, tag }) {
+function Newnote({ setAddClick }) {
+  const { user, loading } = useContext(AuthContext);
+
+  const [form, setForm] = useState({
+    title: '',
+    author: null,
+    description: '',
+    tag: '',
+    imageURL: '',
+  });
+  console.log(user);
   const router = useRouter();
-
+  const body = {
+    form: form,
+    user: user,
+  };
+  useEffect(() => {
+    if (!loading && user) {
+      setForm(f => ({ ...f, author: user.username }));
+    }
+  }, [loading, user]);
   const submitHandler = e => {
     e.preventDefault();
     axios
-      .put(`/api/blogs/${id}`, {
-        title,
-        description,
-        author,
-        tag,
-        imageURL,
-      })
+      .post(`/api/blogs`, body)
       .then(res => {
-        handleClose();
+        setAddClick(false);
         router.reload();
-      });
-  };
-
-  const handleClose = () => {
-    setEdit({
-      isOpen: false,
-      id: null,
-      title: '',
-      author: '',
-      description: '',
-      tag: '',
-      imageURL: '',
-    });
+      })
+      .catch(err => {});
   };
 
   const changehandler = e => {
-    setEdit(f => ({
-      ...f,
+    setForm({
+      ...form,
       [e.target.name]: e.target.value,
-    }));
+    });
   };
 
   return (
@@ -48,7 +49,7 @@ function EditBlog({ setEdit, id, title, author, description, imageURL, tag }) {
         onSubmit={submitHandler}
       >
         <div
-          onClick={handleClose}
+          onClick={() => setAddClick(false)}
           className=' text-black cursor-pointer font-bold py-1 px-2 rounded-full flex justify-end focus:outline-none focus:shadow-outline'
           type='button'
         >
@@ -68,7 +69,6 @@ function EditBlog({ setEdit, id, title, author, description, imageURL, tag }) {
             placeholder='Title'
             name='title'
             onChange={changehandler}
-            value={title}
             autoSave='off'
             autoComplete='off'
             required
@@ -88,7 +88,6 @@ function EditBlog({ setEdit, id, title, author, description, imageURL, tag }) {
             placeholder='Description'
             name='description'
             onChange={changehandler}
-            value={description}
             autoSave='off'
             autoComplete='off'
             required
@@ -108,7 +107,6 @@ function EditBlog({ setEdit, id, title, author, description, imageURL, tag }) {
             placeholder='tag'
             name='tag'
             onChange={changehandler}
-            value={tag}
             autoSave='off'
             autoComplete='off'
             required
@@ -128,7 +126,6 @@ function EditBlog({ setEdit, id, title, author, description, imageURL, tag }) {
             name='imageURL'
             placeholder='ImageURL'
             onChange={changehandler}
-            value={imageURL}
             autoSave='off'
             autoComplete='off'
             required
@@ -139,7 +136,7 @@ function EditBlog({ setEdit, id, title, author, description, imageURL, tag }) {
             className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
             type='submit'
           >
-            Update Blog
+            Add Blog
           </button>
         </div>
       </form>
@@ -147,4 +144,4 @@ function EditBlog({ setEdit, id, title, author, description, imageURL, tag }) {
   );
 }
 
-export default EditBlog;
+export default Newnote;

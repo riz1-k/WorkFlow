@@ -29,8 +29,8 @@ function index({ blogs }) {
 
 export default index;
 
-export const getStaticProps = async () => {
-  const res = await fetch(`${process.env.BACKEND_URL}/api/blogs`);
+export const getServerSideProps = async () => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs`);
   const blogs = await res.json();
   return {
     props: { blogs: blogs.data },

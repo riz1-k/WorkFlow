@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/router';
-import { AuthContext } from '../../components/globalState';
-import SignUp from '../../components/signup';
+import { AuthContext } from './globalState';
+import SignUp from './signup';
 
 function Newnote({ setAddClick }) {
   const [form, setForm] = useState({ title: '', description: '' });

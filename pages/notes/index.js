@@ -1,9 +1,8 @@
 import axios from 'axios';
-import Link from 'next/link';
 import Backdrop from '../../components/Backdrop';
-import Newnote from './Newnote';
+import Newnote from '../../components/Newnote';
 import { useState, useContext, useEffect } from 'react';
-import EditNote from './[id]';
+import EditNote from '../../components/EditNote';
 import { useRouter } from 'next/router';
 import { AuthContext } from '../../components/globalState';
 import SignUp from '../../components/signup';

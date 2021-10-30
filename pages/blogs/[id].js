@@ -2,7 +2,7 @@ import Link from 'next/dist/client/link';
 import moment from 'moment';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import EditBlog from './EditBlog';
+import EditBlog from '../../components/EditBlog';
 import { useState } from 'react';
 import Backdrop from '../../components/Backdrop';
 
@@ -118,7 +118,9 @@ function Blog({ blog }) {
 }
 
 Blog.getInitialProps = async ({ query: { id } }) => {
-  const res = await fetch(`${process.env.BACKEND_URL}/api/blogs/${id}`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs/${id}`
+  );
   const { data } = await res.json();
   return {
     blog: data,

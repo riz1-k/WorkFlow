@@ -1,40 +1,44 @@
 import axios from 'axios';
 import { useState, useContext } from 'react';
 import { useRouter } from 'next/router';
-import { AuthContext } from '../../components/globalState';
+import { AuthContext } from './globalState';
 
-function Newnote({ setAddClick }) {
-  const { user, loading } = useContext(AuthContext);
-
-  const [form, setForm] = useState({
-    title: '',
-    author: user.username,
-    description: '',
-    tag: '',
-    imageURL: '',
-  });
+function EditBlog({ setEdit, id, title, author, description, imageURL, tag }) {
   const router = useRouter();
-  const body = {
-    form: form,
-    user: user,
-  };
 
   const submitHandler = e => {
     e.preventDefault();
     axios
-      .post(`/api/blogs`, body)
-      .then(res => {
-        setAddClick(false);
-        router.reload();
+      .put(`/api/blogs/${id}`, {
+        title,
+        description,
+        author,
+        tag,
+        imageURL,
       })
-      .catch(err => {});
+      .then(res => {
+        handleClose();
+        router.reload();
+      });
+  };
+
+  const handleClose = () => {
+    setEdit({
+      isOpen: false,
+      id: null,
+      title: '',
+      author: '',
+      description: '',
+      tag: '',
+      imageURL: '',
+    });
   };
 
   const changehandler = e => {
-    setForm({
-      ...form,
+    setEdit(f => ({
+      ...f,
       [e.target.name]: e.target.value,
-    });
+    }));
   };
 
   return (
@@ -44,7 +48,7 @@ function Newnote({ setAddClick }) {
         onSubmit={submitHandler}
       >
         <div
-          onClick={() => setAddClick(false)}
+          onClick={handleClose}
           className=' text-black cursor-pointer font-bold py-1 px-2 rounded-full flex justify-end focus:outline-none focus:shadow-outline'
           type='button'
         >
@@ -64,6 +68,7 @@ function Newnote({ setAddClick }) {
             placeholder='Title'
             name='title'
             onChange={changehandler}
+            value={title}
             autoSave='off'
             autoComplete='off'
             required
@@ -83,6 +88,7 @@ function Newnote({ setAddClick }) {
             placeholder='Description'
             name='description'
             onChange={changehandler}
+            value={description}
             autoSave='off'
             autoComplete='off'
             required
@@ -102,6 +108,7 @@ function Newnote({ setAddClick }) {
             placeholder='tag'
             name='tag'
             onChange={changehandler}
+            value={tag}
             autoSave='off'
             autoComplete='off'
             required
@@ -121,6 +128,7 @@ function Newnote({ setAddClick }) {
             name='imageURL'
             placeholder='ImageURL'
             onChange={changehandler}
+            value={imageURL}
             autoSave='off'
             autoComplete='off'
             required
@@ -131,7 +139,7 @@ function Newnote({ setAddClick }) {
             className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
             type='submit'
           >
-            Add Blog
+            Update Blog
           </button>
         </div>
       </form>
@@ -139,4 +147,4 @@ function Newnote({ setAddClick }) {
   );
 }
 
-export default Newnote;
+export default EditBlog;

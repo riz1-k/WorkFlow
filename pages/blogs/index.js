@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import Backdrop from '../../components/Backdrop';
-import NewBlog from './NewBlog';
+import NewBlog from '../../components/NewBlog';
 import moment from 'moment';
 import Link from 'next/link';
 import { AuthContext } from '../../components/globalState';

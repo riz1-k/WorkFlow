@@ -48,7 +48,9 @@ function Blog({ blog }) {
 }
 
 Blog.getInitialProps = async ({ query: { id } }) => {
-  const res = await fetch(`${BACKEND_URL}/api/blogs/${id}`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs/${id}`
+  );
   const { data } = await res.json();
   return {
     blog: data,
