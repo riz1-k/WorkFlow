@@ -1,9 +1,8 @@
 import dbConnect from '../../../server/connect';
 import Blog from '../../../server/database/models/blogSchema';
 
-dbConnect();
-
 export default async (req, res) => {
+  await dbConnect();
   const {
     query: { id },
     method,

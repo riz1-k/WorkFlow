@@ -1,14 +1,12 @@
 import dbConnect from '../../../server/connect';
 import Todo from '../../../server/database/models/todoSchema';
 
-dbConnect();
-
 export default async (req, res) => {
   const {
     query: { id },
     method,
   } = req;
-
+  await dbConnect();
   switch (method) {
     case 'GET':
       try {

@@ -1,13 +1,12 @@
 import dbConnect from '../../../server/connect';
 import Note from '../../../server/database/models/noteSchema';
 
-dbConnect();
-
 export default async (req, res) => {
   const {
     query: { id },
     method,
   } = req;
+  await dbConnect();
 
   switch (method) {
     case 'GET':

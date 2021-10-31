@@ -3,11 +3,10 @@ import User from '../../../server/database/models/userSchema';
 import nc from 'next-connect';
 import auth from '../../../components/auth';
 
-await connect();
-
 const handler = nc()
   .use(auth)
-  .get((req, res) => {
+  .get(async (req, res) => {
+    await connect();
     User.findById(req.user.id)
       .select('-password')
       .populate('todos notes blogs')
