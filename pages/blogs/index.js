@@ -78,7 +78,6 @@ function Blogs() {
                               className='w-72 max-h-72 my-auto m-2 rounded-md shadow-lg absolute z-10 border-2 border-gray-200 '
                             />
                           </div>
-
                           <div className='px-2 flex justify-center '>
                             <div>
                               <span className='inline-block bg-red-100  px-3 py-2 text-xs font-semibold text-red-600 mr-2'>
